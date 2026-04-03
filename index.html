@@ -122,11 +122,7 @@ body {
 /* ═══════════════════════════════════════════
    FLUID CURSOR CANVAS
 ═══════════════════════════════════════════ */
-#fluid-canvas {
-  position: fixed; top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  pointer-events: none; z-index: 999;
-}
+
 
 /* ═══════════════════════════════════════════
    KOLAM DOT BACKGROUND
@@ -731,6 +727,48 @@ body::before {
   .sf-char { font-size: 32px; letter-spacing: 2px; }
   .cd-num  { font-size: 24px; }
   .confetti-edge { width: 12px; }
+}
+/* ===============================
+   MOBILE SCROLL FIX
+=============================== */
+
+html, body {
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#fluid-canvas {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+.confetti-edge {
+  position: absolute !important;
+}
+
+.particle {
+  position: absolute !important;
+}
+
+body::before {
+  position: absolute !important;
+}
+
+.page {
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  #fluid-canvas {
+    display: none !important;
+  }
+
+  .particle {
+    display: none !important;
+  }
 }
 </style>
 </head>
@@ -1379,6 +1417,13 @@ document.querySelectorAll('.section, .sch-item').forEach(el => io.observe(el));
   });
   window.addEventListener('resize', () => { canvas.width=pxr(window.innerWidth); canvas.height=pxr(window.innerHeight); });
 })();
+// Force scroll fix
+document.body.style.overflowY = "auto";
+document.documentElement.style.overflowY = "auto";
+
+document.addEventListener("touchmove", function(e) {
+  return true;
+}, { passive: true });
 </script>
 </body>
 </html>
